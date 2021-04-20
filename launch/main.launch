@@ -1,0 +1,35 @@
+<launch>
+  <arg name="type" default="slam" />
+  <arg name="destination" />
+  <arg name="path" default="paths/defaultPath" />
+  <arg name="pose" default="/defaultPose"/>
+  <arg name="map" default="maps/defaultMap"/>
+
+  <group if="$(eval arg('type') == 'slam')">
+     <node name="slam" pkg="select_mode" type="slam.py" output="screen"> 
+        <param name="map" type="string" value="$(arg map)"/>
+        <param name="pose" type="string" value="$(arg pose)"/>
+        <param name="destination" type="string" value="$(arg destination)"/>
+        <rosparam command="load" file="$(find select_mode)/config/paramsSlam.yaml"/>
+    </node>
+  </group>
+
+  <group if="$(eval arg('type') == 'gps')">
+    <node name="gps" pkg="select_mode" type="gps.py" output="screen" if="$(eval arg('type') == 'gps')"> 
+	    <param name="path" type="string" value="$(arg path)"/>
+	    <param name="pose" type="string" value="$(arg pose)"/>
+        <param name="destination" type="string" value="$(arg destination)"/>
+        <rosparam command="load" file="$(find select_mode)/config/paramsGps.yaml"/>
+    </node>
+  </group>
+
+  <group if="$(eval arg('type') == 'deadReckoning')">
+    <node name="deadReckoning" pkg="select_mode" type="dead_reckoning.py" output="screen"> 
+	<param name="path" type="string" value="$(arg path)"/>
+	<param name="pose" type="string" value="$(arg pose)"/>
+  <param name="destination" type="string" value="$(arg destination)"/>
+  <rosparam command="load" file="$(find select_mode)/config/paramsDeadReckoning.yaml"/>
+    </node>
+  </group>
+
+</launch>

@@ -1,0 +1,15 @@
+<launch>
+  <arg name="destination" />
+  <arg name="path" default="paths/defaultPath" />
+  <arg name="pose" default="/defaultPose"/>
+  <arg name="map" default="maps/defaultMap"/>
+
+  <group>
+    <node name="dead_reckoning" pkg="select_mode" type="dead_reckoning.py" output="screen"> 
+	<param name="path" type="string" value="$(arg path)"/>
+	<param name="pose" type="string" value="$(arg pose)"/>
+  <param name="destination" type="string" value="$(arg destination)"/>
+  <rosparam command="load" file="$(find select_mode)/config/paramsDeadReckoning.yaml"/>
+    </node>
+  </group>
+</launch>

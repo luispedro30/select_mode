@@ -1,0 +1,22 @@
+<launch>
+  <arg name="type"/>
+  <arg name="destination" default="destination/defaultDestination"/>
+  <arg name="path" default="paths/defaultPath" />
+  <arg name="pose" default="/defaultPose"/>
+  <arg name="map" default="maps/defaultMap"/>
+
+  <group >
+    <node name="slam" pkg="select_mode" type="slam.py" output="screen"> 
+  <param name="map" type="string" value="$(arg map)"/>
+  <param name="pose" type="string" value="$(arg pose)"/>
+  <param name="destination" type="string" value="$(arg destination)"/>
+  <rosparam command="load" file="$(find select_mode)/config/paramsSlam.yaml"/>
+    </node>
+  </group>
+
+</launch>
+
+
+
+
+

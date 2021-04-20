@@ -1,0 +1,15 @@
+<launch>
+  <arg name="destination" />
+  <arg name="path" default="paths/defaultPath" />
+  <arg name="pose" default="/defaultPose"/>
+  <arg name="map" default="maps/defaultMap"/>
+
+  <group>
+    <node name="gps" pkg="select_mode" type="gps.py" output="screen"> 
+	<param name="path" type="string" value="$(arg path)"/>
+	<param name="pose" type="string" value="$(arg pose)"/>
+  <param name="destination" type="string" value="$(arg destination)"/>
+  <rosparam command="load" file="$(find select_mode)/config/paramsGps.yaml"/>
+    </node>
+  </group>
+</launch>
